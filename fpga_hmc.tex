@@ -1,0 +1,128 @@
+\documentclass[11pt,twocolumn]{article}
+
+\usepackage{graphicx}  % Required to insert images
+\usepackage{amsmath}   % Required for math
+\usepackage{subfigure} % Required to insert sub-images
+\usepackage{mathptmx}  % Required to use Times Roman font
+\usepackage{geometry}  % Required to set margins
+ \geometry{
+ letterpaper, %a4paper
+ total={215.9mm, 279.4mm}, %210mm,297mm
+ left=15mm,
+ right=15mm,
+ top=10mm,
+ bottom=20mm,
+ }
+
+\begin{document}
+
+\title{\textbf{Design Space Exploration of New FPGAs-HMCs System Architecture for Graph Applications}}
+
+\author{\large Abdalrahman M. Arafeh and Guy G.F. Lemieux \\
+Department of Electrical and Computer Engineering\\
+University of British Columbia \\ Vancouver, B.C., V6T 1Z4, Canada \\
+\{arafeh, lemieux\}@ece.ubc.ca}
+
+\date{\vspace{-4ex}}
+
+
+\maketitle
+
+Algorithms that exhibit irregular memory access patterns are known
+to show poor performance on multiprocessor architectures,
+particularly when those applications have low computation to
+memory access ratio. Graph-based algorithms exhibit very poor
+temporal and spacial locality and they do not benefit from
+conventional latency reduction in cash-based systems. We are
+aiming to make an early design space exploration of a new
+multi-core multi-threaded FPGA-based system architecture for high
+performance computing of irregular graph applications. We are
+using FPGAs for their flexibility and for their serial
+interconnects capability and interpretability with fast memory
+systems like the Hybrid Memory Cube (HMC).
+
+The main challenge for speeding-up graph applications is memory
+access concurrency. System performance and scalability will be
+influenced by the unpredictable memory access. While
+multi-threaded processor cores can hide memory latency, the
+overall system performance will be limited by available memory
+banks and the number of simultaneous memory reads and writes.
+Current DDR3 SDRAM memories are limited to 8 banks and they are
+not designed for random memory accesses. Whereas, HMC can handle
+out-of-order memory requests through operationally independent
+vaults controllers, packets queueing, many memory banks and
+high-speed serial links. HMC requires smaller board space, less
+routing, physical volume and logic for memory controllers compared
+to DDR3 memories with equivalent number of banks.
+
+In envisioning a new system architecture we can model the system
+as to have multiple FPGAs each with $C$ cores and $T$ thread
+contexts in one of the topologies shown in Figure~\ref{f1}. Such
+architecture offers many design choices including different
+FPGA-to-HMC ratios and topologies trade-offs (4-to-1 in
+Figure~\ref{1-1-1}, 1-to-8 in Figure~\ref{1-1-3}, 2-to-8 in
+Figure~\ref{1-1-4} and 4-to-8 in Figure~\ref{1-1-5}). Furthermore,
+it provides the chance to use FPGAs with different sizes and
+different possible FPGA-to-FPGA connectivity. The architecture
+will also provide a hardware infrastructure for different
+programming models including High Level Synthesis, soft processors
+and overlays.
+
+To simulate the new architecture we are using
+HMC-SIM~\cite{HMCSIM}; a basic HMC simulator made in Texas Tech
+University. HMC-SIM simulates the internal HMC crossbar's and
+vaults queues and detects bank conflicts, but it lacks timing
+information, transmission links modelling and memory access
+latency. Currently, we are limited by HMC-SIM capabilities and we
+are looking for more detailed and accurate HMC simulator to
+combine it with our architectural level simulations.
+
+Graphs can integrate data across different sources and connect
+location information, health conditions and driving habits to find
+answers to questions like, how to retain customers, catch frauds,
+or foresight threats and possible epidemics. Graph Analytics can
+uncover valuable insights in Big Data. They are based on versatile
+and powerful model that relates objects to objects with arbitrary
+relationships and they can explain different phenomenons in the
+world.
+
+Graph Analytics and pointer-based data structure algorithms can
+spawn concurrent activity for each element (e.g., graph node). Any
+element can point to other elements leading to unpredictable,
+irregular and random fine-grained memory accesses in datasets that
+could be in the range of terabytes. Alternatively, tolerating
+graph algorithms irregular memory latency can be achieved by
+utilizing novel memory systems and by using multi-threaded
+processors. Where, a large number of thread contexts can keep the
+processor pipeline busy and new memory systems can provide
+sustained and simultaneous memory operations.
+
+
+
+\begin{figure*}[p]
+\centering \subfigure[Topology-1: 4-FPGAs, 1-HMC - Max: 1 hop]{
+\includegraphics[scale=0.6]{f1.eps}
+\label{1-1-1} } \label{f1}
+\end{figure*}
+
+\begin{figure*}[p]
+\centering \subfigure[Topology-2: 1-FPGA, 8-HMCs - Max: 3 hops]{
+\includegraphics[scale=0.6]{f2.eps}
+\label{1-1-3} }  \hspace{3em} \subfigure[Topology-3: 2-FPGAs,
+8-HMCs - Max: 3 hops]{
+\includegraphics[scale=0.6]{f3.eps}
+\label{1-1-4} } \label{f1}
+\end{figure*}
+
+
+\begin{figure*}[p]
+\centering \subfigure[Topology-4: 4-FPGAs, 8-HMCs - Max: 4 hops]{
+\includegraphics[scale=0.6]{f6.eps}
+\label{1-1-5} } \caption[]{FPGAs-HMCs System Architecture.}
+\label{f1}
+\end{figure*}
+
+\bibliography{Irregular}
+\bibliographystyle{unsrt}
+
+\end{document}
